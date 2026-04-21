@@ -79,6 +79,9 @@ protected:
 	glm::vec3 torque = glm::vec3(0.f);
 
 	friend class AppPoint<RigidBody>;
+	friend RigidBody Merge(const RigidBody& rb1, const RigidBody& rb2); // TODO: test this function
 };
+
+std::pair<glm::quat, glm::vec3> jacobiDiagonalization(const glm::mat3& matrix, const int nIters = 10);
 
 END_PHYSICS_NAMESPACE

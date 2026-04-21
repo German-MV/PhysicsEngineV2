@@ -50,4 +50,14 @@ void Rope::addToEngine(class PhysicsEngine& engine)
 		engine.addExisting(constraint);
 }
 
+void Rope::removeFromEngine(class PhysicsEngine& engine)
+{
+	for (auto& particle : particles)
+		engine.remove(particle);
+	for (auto& appPoint : appPoints)
+		engine.remove(appPoint);
+	for (auto& constraint : constraints)
+		engine.remove(constraint);
+}
+
 END_PHYSICS_NAMESPACE

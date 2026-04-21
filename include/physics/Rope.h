@@ -22,6 +22,7 @@ public:
 
 protected:
 	void addToEngine(class PhysicsEngine& engine) override;
+	void removeFromEngine(class PhysicsEngine& engine) override;
 
 	std::vector<std::shared_ptr<AppPoint<Particle>>> appPoints;
 	std::vector<std::shared_ptr<DistConstraint>> constraints;

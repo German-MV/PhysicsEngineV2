@@ -95,6 +95,35 @@ public:
 		}
 	}
 
+	template <typename T>
+	void remove(const std::shared_ptr<T>& ptr)
+	{
+		if constexpr (std::is_base_of<Object, T>::value)
+		{
+			objects.erase(std::remove(objects.begin(), objects.end(), ptr), objects.end());
+		}
+		else if constexpr (std::is_base_of<Force, T>::value)
+		{
+			forces.erase(std::remove(forces.begin(), forces.end(), ptr), forces.end());
+		}
+		else if constexpr (std::is_base_of<ApplicationPoint, T>::value)
+		{
+			appPoints.erase(std::remove(appPoints.begin(), appPoints.end(), ptr), appPoints.end());
+		}
+		else if constexpr (std::is_base_of<Constraint, T>::value)
+		{
+			constraints.erase(std::remove(constraints.begin(), constraints.end(), ptr), constraints.end());
+		}
+		else if constexpr (std::is_base_of<System, T>::value)
+		{
+			std::dynamic_pointer_cast<System>(ptr)->removeFromEngine(*this);
+		}
+		else
+		{
+			static_assert(always_false<T>::value, "Type T must derive from Object, Interaction, ApplicationPoint, or Constraint.");
+		}
+	}
+
 	void update(float deltaTime, const unsigned int nSubsteps = 6, const unsigned int nSolverIterations = 6);
 
 	template <typename T>

@@ -42,4 +42,15 @@ void DoublePendulum::addToEngine(class PhysicsEngine& engine)
 	engine.addExisting(constraint2);
 }
 
+void DoublePendulum::removeFromEngine(class PhysicsEngine& engine)
+{
+	engine.remove(particle1);
+	engine.remove(particle2);
+	engine.remove(appPart1);
+	engine.remove(appPart2);
+	engine.remove(pivot);
+	engine.remove(constraint1);
+	engine.remove(constraint2);
+}
+
 END_PHYSICS_NAMESPACE

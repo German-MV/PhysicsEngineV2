@@ -1,4 +1,5 @@
 #include "physics/RigidBody.h"
+#include "utils.h"
 
 START_PHYSICS_NAMESPACE
 
@@ -75,7 +76,11 @@ void RigidBody::setLocalInertiaTensor(float newI1, float newI2, float newI3)
 
 void RigidBody::setWorldInertiaTensor(const glm::mat3& inertiaTensor)
 {
-	/* TODO: diagonalization */
+	auto [q, inertiaDiagonal] = jacobiDiagonalization(inertiaTensor);
+	orientation = q;
+	I1 = inertiaDiagonal.x;
+	I2 = inertiaDiagonal.y;
+	I3 = inertiaDiagonal.z;
 }
 
 void RigidBody::setPosition(const glm::vec3& newPosition)
@@ -215,5 +220,134 @@ void RigidBody::correctVel(float deltaTime)
 //		glm::normalize(glm::vec3(solver.eigenvectors()(0, 2), solver.eigenvectors()(1, 2), solver.eigenvectors()(2, 2)))
 //	);
 //}
+
+void jacobiRotation(glm::mat3& matrix, int i, int j, float c, float s)
+{
+	float Aii = matrix[i][i];
+	float Ajj = matrix[j][j];
+	float Aij = matrix[i][j];
+
+	// We update the diagonal values
+	matrix[i][i] = c * c * Aii - 2.f * c * s * Aij + s * s * Ajj;
+	matrix[j][j] = s * s * Aii + 2.f * c * s * Aij + c * c * Ajj;
+	matrix[i][j] = 0.f;
+	matrix[j][i] = 0.f;
+
+	// We update the other values
+	for (int k = 0; k < 3; ++k)
+	{
+		if (k == i || k == j) continue;
+
+		float Aik = matrix[i][k];
+		float Ajk = matrix[j][k];
+
+		matrix[i][k] = c * Aik - s * Ajk;
+		matrix[j][k] = s * Aik + c * Ajk;
+
+		matrix[k][i] = matrix[i][k];
+		matrix[k][j] = matrix[j][k];
+	}
+}
+
+std::pair<glm::quat, glm::vec3> jacobiDiagonalization(const glm::mat3& matrix, const int nIters)
+{
+	/*
+	* Input: symmetric 3x3 matrix
+	* Output: pair of eigenvectors (3x3 rotation matrix), eigenvalues (3D vector)
+	*/
+	glm::mat A = matrix;
+	glm::mat Q = glm::mat3(1.f);
+
+	for (int iter = 0; iter < nIters; ++iter)
+	{
+		for (int i = 0; i < 3; ++ i)
+		for (int j = i + 1; j < 3; ++j)
+		{
+			if (fabsf(A[i][j]) < EPSILON) continue;
+
+			float tau = (A[j][j] - A[i][i]) / (2.f * A[i][j]);
+			float t = sign(tau) / (fabsf(tau) + sqrtf(1.f + tau * tau));
+			float c = 1.f / sqrtf(1.f + t * t);
+			float s = t * c;
+
+			// Jacobi rotation to A
+			float Aii = A[i][i];
+			float Ajj = A[j][j];
+			float Aij = A[i][j];
+
+			// We update the diagonal values
+			A[i][i] = c * c * Aii - 2.f * c * s * Aij + s * s * Ajj;
+			A[j][j] = s * s * Aii + 2.f * c * s * Aij + c * c * Ajj;
+			A[i][j] = 0.f;
+			A[j][i] = 0.f;
+
+			// We update the other values
+			for (int k = 0; k < 3; ++k)
+			{
+				if (k == i || k == j) continue;
+
+				float Aik = A[i][k];
+				float Ajk = A[j][k];
+
+				A[i][k] = c * Aik - s * Ajk;
+				A[j][k] = s * Aik + c * Ajk;
+
+				A[k][i] = A[i][k];
+				A[k][j] = A[j][k];
+			}
+
+			// Jacobi rotation to Q
+			for (int k = 0; k < 3; ++k)
+			{
+				float Qki = Q[k][i];
+				float Qkj = Q[k][j];
+
+				Q[i][k] = c * Qki - s * Qkj;
+				Q[j][k] = s * Qki + c * Qkj;
+			}
+		}
+	}
+
+	glm::quat orientation = glm::normalize(glm::quat_cast(Q));
+	glm::vec3 eigenvalues(A[0][0], A[1][1], A[2][2]);
+
+	return std::make_pair(orientation, eigenvalues);
+}
+
+RigidBody Merge(const RigidBody& rb1, const RigidBody& rb2)
+{
+	float mass = rb1.mass + rb2.mass;
+
+	glm::vec3 position = (rb1.position * rb1.mass + rb2.position * rb2.mass) / mass;
+	glm::vec3 velocity = (rb1.velocity * rb1.mass + rb2.velocity * rb2.mass) / mass;
+
+	glm::mat3 inertia1 = rb1.getWorldInertiaTensor();
+	glm::mat3 inertia2 = rb2.getWorldInertiaTensor();
+
+	glm::vec3 relPos1 = rb1.position - position;
+	glm::vec3 relPos2 = rb2.position - position;
+
+	glm::mat3 shiftedIntertia1 = inertia1 + rb1.mass * (glm::mat3(glm::dot(relPos1, relPos1)) - glm::outerProduct(relPos1, relPos1));
+	glm::mat3 shiftedIntertia2 = inertia2 + rb2.mass * (glm::mat3(glm::dot(relPos2, relPos2)) - glm::outerProduct(relPos2, relPos2));
+
+	glm::mat3 inertia = shiftedIntertia1 + shiftedIntertia2;
+
+	auto [orientation, localInertiaDiag] = jacobiDiagonalization(inertia);
+
+	RigidBody mergedBody(
+		mass,
+		localInertiaDiag.x, localInertiaDiag.y, localInertiaDiag.z,
+		position,
+		orientation,
+		velocity
+	);
+
+	glm::vec3 angularMomentum1 = inertia1 * rb1.getWorldAngularVelocity();
+	glm::vec3 angularMomentum2 = inertia2 * rb2.getWorldAngularVelocity();
+	glm::vec3 angularMomentum = angularMomentum1 + angularMomentum2;
+	mergedBody.setWorldAngularVelocity(mergedBody.getWorldInvInertiaTensor() * angularMomentum);
+
+	return mergedBody;
+}
 
 END_PHYSICS_NAMESPACE

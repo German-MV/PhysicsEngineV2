@@ -25,6 +25,7 @@ protected:
 	friend class PhysicsEngine;
 
 	virtual void addToEngine(PhysicsEngine& engine) = 0;
+	virtual void removeFromEngine(PhysicsEngine& engine) {};
 };
 
 END_PHYSICS_NAMESPACE

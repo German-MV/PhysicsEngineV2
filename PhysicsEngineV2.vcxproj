@@ -506,14 +506,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\germa\Desktop\Programacion\PhysicsEngineV2\include;C:\Users\germa\Desktop\Programacion\PhysicsEngineV2\external\GLAD\include;C:\Users\germa\Desktop\Programacion\PhysicsEngineV2\external\GLFW\include;C:\Users\germa\Desktop\Programacion\PhysicsEngineV2\external\GLM\include;C:\Users\germa\Desktop\Programacion\PhysicsEngineV2\external\KHR\include;C:\Users\germa\Desktop\Programacion\PhysicsEngineV2\external\stb\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\germa\Desktop\Programacion\PhysicsEngineV2\external\GLFW\src;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\germa\Desktop\Programacion\PhysicsEngineV2\external\GLAD\include;C:\Users\germa\Desktop\Programacion\PhysicsEngineV2\lib\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\germa\Desktop\Programacion\PhysicsEngineV2\lib\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(ProjectDir)build\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)build\$(Configuration)\obj\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\germa\Desktop\Programacion\PhysicsEngineV2\include;C:\Users\germa\Desktop\Programacion\PhysicsEngineV2\external\GLAD\include;C:\Users\germa\Desktop\Programacion\PhysicsEngineV2\external\GLFW\include;C:\Users\germa\Desktop\Programacion\PhysicsEngineV2\external\GLM\include;C:\Users\germa\Desktop\Programacion\PhysicsEngineV2\external\KHR\include;C:\Users\germa\Desktop\Programacion\PhysicsEngineV2\external\stb\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\germa\Desktop\Programacion\PhysicsEngineV2\external\GLFW\src;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\germa\Desktop\Programacion\PhysicsEngineV2\external\GLAD\include;C:\Users\germa\Desktop\Programacion\PhysicsEngineV2\lib\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\germa\Desktop\Programacion\PhysicsEngineV2\lib\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(ProjectDir)build\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)build\$(Configuration)\obj\</IntDir>
   </PropertyGroup>

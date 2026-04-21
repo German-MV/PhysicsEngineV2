@@ -26,6 +26,7 @@ public:
 
 private:
 	void addToEngine(class PhysicsEngine& engine) override;
+	void removeFromEngine(class PhysicsEngine& engine) override;
 };
 
 END_PHYSICS_NAMESPACE

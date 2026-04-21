@@ -20,13 +20,12 @@
 #include <iostream>
 #include <fstream>
 
+#include <thread>
+#include <mutex>
+
+#include "utils.h"
+
 using namespace Physics;
-
-
-std::ostream& operator << (std::ostream& os, const glm::vec3& vec) {
-	os << "(" << vec.x << ", " << vec.y << ", " << vec.z << ")";
-	return os;
-}
 
 int main() {
 	PhysicsEngine physics;
@@ -145,7 +144,7 @@ int main() {
 		glm::vec3 pos1 = dp->getPosition1();
 		glm::vec3 pos2 = dp->getPosition2();
 
-		/*draw(point);
+		draw(point);
 		draw(pos1);
 		draw(pos2);
 		drawRope(*rope);
@@ -153,7 +152,7 @@ int main() {
 		draw(particle1->getPosition());
 		draw(particle2->getPosition());
 		draw(pivot1->getPosition());
-		draw(pivot2->getPosition());*/
+		draw(pivot2->getPosition());
 		draw(staticAppPointRigid->getPosition());
 		float size = 2.f;
 		draw(rigidBodyAppPoint1->getPosition());
