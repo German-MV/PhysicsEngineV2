@@ -280,12 +280,13 @@
     <ClInclude Include="include\physics\Force.h" />
     <ClInclude Include="include\physics\ConstGravity.h" />
     <ClInclude Include="include\physics\Gravity.h" />
+    <ClInclude Include="include\physics\physics.h" />
     <ClInclude Include="include\physics\RigidBody.h" />
     <ClInclude Include="include\physics\RigidBodySamples.h" />
     <ClInclude Include="include\physics\Rope.h" />
     <ClInclude Include="include\physics\Spring.h" />
     <ClInclude Include="include\physics\Particle.h" />
-    <ClInclude Include="include\physics\Physic.h" />
+    <ClInclude Include="include\physics\PhysicBase.h" />
     <ClInclude Include="include\physics\Object.h" />
     <ClInclude Include="include\physics\PhysicsEngine.h" />
     <ClInclude Include="include\physics\StaticAppPoint.h" />
@@ -311,7 +312,7 @@
     <ClCompile Include="src\physics\RigidBody.cpp" />
     <ClCompile Include="src\physics\Spring.cpp" />
     <ClCompile Include="src\physics\Particle.cpp" />
-    <ClCompile Include="src\physics\Physic.cpp" />
+    <ClCompile Include="src\physics\PhysicBase.cpp" />
     <ClCompile Include="src\physics\Object.cpp" />
     <ClCompile Include="src\physics\PhysicsEngine.cpp" />
     <ClCompile Include="src\physics\StaticAppPoint.cpp" />

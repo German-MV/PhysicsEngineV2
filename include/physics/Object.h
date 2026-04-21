@@ -1,5 +1,5 @@
 #pragma once
-#include "Physic.h"
+#include "PhysicBase.h"
 
 START_PHYSICS_NAMESPACE
 
@@ -12,7 +12,7 @@ enum class ObjectType
 
 std::string toStr(ObjectType objectType);
 
-class Object : public Physic
+class Object : public PhysicBase
 {
 public:
 	Object();

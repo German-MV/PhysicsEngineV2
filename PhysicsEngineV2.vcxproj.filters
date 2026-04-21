@@ -807,7 +807,7 @@
     <ClInclude Include="external\stb\include\stb_image.h">
       <Filter>External</Filter>
     </ClInclude>
-    <ClInclude Include="include\physics\Physic.h">
+    <ClInclude Include="include\physics\PhysicBase.h">
       <Filter>Headers\physics</Filter>
     </ClInclude>
     <ClInclude Include="include\physics\ApplicationPoint.h">
@@ -879,6 +879,9 @@
     <ClInclude Include="include\physics\AppPointRigidBody.h">
       <Filter>Headers\physics\applicationPoints</Filter>
     </ClInclude>
+    <ClInclude Include="include\physics\physics.h">
+      <Filter>Headers\physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\GLAD\src\glad.c">
@@ -887,7 +890,7 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\physics\Physic.cpp">
+    <ClCompile Include="src\physics\PhysicBase.cpp">
       <Filter>Sources\physics</Filter>
     </ClCompile>
     <ClCompile Include="src\physics\ApplicationPoint.cpp">

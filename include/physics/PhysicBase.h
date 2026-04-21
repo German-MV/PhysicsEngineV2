@@ -21,16 +21,16 @@ enum class PhysicType
 
 std::string toStr(PhysicType physicType);
 
-class Physic
+class PhysicBase
 {
 public:
-	Physic() : physicType(PhysicType::NO_PHYSIC) {}
-	virtual ~Physic() = default;
+	PhysicBase() : physicType(PhysicType::NO_PHYSIC) {}
+	virtual ~PhysicBase() = default;
 
 	PhysicType getPhysicType() const;
 
 protected:
-	Physic(PhysicType physicType) : physicType(physicType) {}
+	PhysicBase(PhysicType physicType) : physicType(physicType) {}
 
 	PhysicType physicType;
 };

@@ -1,4 +1,4 @@
-#include "physics/Physic.h"
+#include "physics/PhysicBase.h"
 
 START_PHYSICS_NAMESPACE
 
@@ -21,6 +21,6 @@ std::string toStr(PhysicType physicType)
 	}
 }
 
-PhysicType Physic::getPhysicType() const { return physicType; }
+PhysicType PhysicBase::getPhysicType() const { return physicType; }
 
 END_PHYSICS_NAMESPACE

@@ -13,7 +13,7 @@ float ApplicationPoint::getEffectiveInverseMass(const glm::vec3& n) const { retu
 void ApplicationPoint::applyConstraintCorrection(const glm::vec3& n, float deltaLambda, float invMass) const {}
 
 ApplicationPoint::ApplicationPoint()
-	: Physic(PhysicType::APPLICATION_POINT)
+	: PhysicBase(PhysicType::APPLICATION_POINT)
 {}
 
 END_PHYSICS_NAMESPACE

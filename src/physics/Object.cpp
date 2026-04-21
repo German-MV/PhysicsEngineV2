@@ -18,11 +18,11 @@ std::string toStr(ObjectType objectType)
 }
 
 Object::Object() :
-	Physic(PhysicType::OBJECT), objectType(ObjectType::NO_OBJECT) {}
+	PhysicBase(PhysicType::OBJECT), objectType(ObjectType::NO_OBJECT) {}
 
 ObjectType Object::getObjectType() const  { return objectType; }
 
 Object::Object(ObjectType objectType) : 
-	Physic(PhysicType::OBJECT), objectType(objectType) {}
+	PhysicBase(PhysicType::OBJECT), objectType(objectType) {}
 
 END_PHYSICS_NAMESPACE

@@ -1,13 +1,13 @@
 #pragma once
 
-#include "physics/Physic.h"
+#include "physics/PhysicBase.h"
 
 START_PHYSICS_NAMESPACE
 
-class Force : public Physic
+class Force : public PhysicBase
 {
 public:
-	Force() : Physic(PhysicType::FORCE) {}
+	Force() : PhysicBase(PhysicType::FORCE) {}
 	
 	virtual void applyForce() = 0;
 };

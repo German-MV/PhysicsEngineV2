@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Physic.h"
+#include "PhysicBase.h"
 #include "Object.h"
 
 START_PHYSICS_NAMESPACE
 
-class ApplicationPoint : public Physic
+class ApplicationPoint : public PhysicBase
 {
 public:
 	ApplicationPoint();

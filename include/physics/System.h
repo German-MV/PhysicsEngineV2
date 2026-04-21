@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Physic.h"
+#include "PhysicBase.h"
 #include "physics/Object.h"
 #include "physics/Force.h"
 #include "physics/ApplicationPoint.h"
@@ -10,7 +10,7 @@
 
 START_PHYSICS_NAMESPACE
 
-class System : public Physic
+class System : public PhysicBase
 {
 protected:
 	using PtrObj = std::shared_ptr<Object>;
@@ -19,7 +19,7 @@ protected:
 	using PtrCst = std::shared_ptr<Constraint>;
 
 public:
-	System() : Physic(PhysicType::SYSTEM) {}
+	System() : PhysicBase(PhysicType::SYSTEM) {}
 
 protected:
 	friend class PhysicsEngine;

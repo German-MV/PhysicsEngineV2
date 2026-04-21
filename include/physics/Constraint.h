@@ -1,13 +1,13 @@
 #pragma once
 
-#include "physics/Physic.h"
+#include "physics/PhysicBase.h"
 
 START_PHYSICS_NAMESPACE
 
-class Constraint : public Physic
+class Constraint : public PhysicBase
 {
 public:
-	Constraint() : Physic(PhysicType::CONSTRAINT) {}
+	Constraint() : PhysicBase(PhysicType::CONSTRAINT) {}
 
 	virtual void solve(float deltaTime) = 0;
 
